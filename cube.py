@@ -1,64 +1,42 @@
-#!/opt/moose/miniconda/bin/python
-
-
+#!/usr/bin/python
 import random
 import time
 import numpy as np
 import scipy.stats as stats
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import os
-from mpi4py import MPI
-
-comm = MPI.COMM_WORLD
-rank = comm.Get_rank()
-size = comm.Get_size()
-name = MPI.Get_processor_name()
-solved = ['state','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
-cube = ['','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
-cubestate = ['state','','','','','','','','','','','','','','','','','','','','','','','','']
-
 newstate = dict()
-if rank == 0:
-    class puzzle:
-        print '''
-    Sticker positions:
-
-            16 15
-            14 13
-      19 17 01 02 10 12
-      20 18 03 04 09 11
-            05 06
-            07 08
-            21 22
-            23 24
-    '''
-        for i in range(1,25):
-            cubestate[i] = raw_input("What is the state of sticker %i?: " %(i))
-        for i in range(25):
-            cube[i] = cubestate[i]
-        def graphic(self,x):
-            print '''
-          %s %s
-          %s %s
-      %s %s %s %s %s %s
-      %s %s %s %s %s %s
-          %s %s
-          %s %s
-          %s %s
-          %s %s
-          '''%(x[16],x[15],x[14],x[13],x[19],x[17],x[1],x[2],x[10],x[12],x[20],x[18],x[3],x[4],x[9],x[11],x[5],x[6],x[7],x[8],x[21],x[22],x[23],x[24])
-        def first(self):
-            return cubestate[1]
-
-if rank == 0:
-    twobytwo = puzzle()
-cube = comm.bcast(cube,root=0)
-for i in range(25):
-    cubestate[i] = cube[i]
-first = cube[1]
-while True:
-    if cube[0] == 'state':
-        break
+#print '''Sticker positions:
+#
+#        16 15
+#        14 13
+#  19 17 01 02 10 12
+#  20 18 03 04 09 11
+#        05 06
+#        07 08
+#        21 22
+#        23 24
+#'''
+#option = raw_input('''Please choose an option:
+#1: Enter cube state
+#2 or <Enter>: Solved cube state
+#''')
+solved = ['state','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
+cube = ['state','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
+cubestate = ['state','','','','','','','','','','','','','','','','','','','','','','','','']
+option = '1'
+if option == '1':
+    for i in range(1,25):
+        cubestate[i] = raw_input("What is the state of sticker %i?: " %(i))
+if option == '2' or option == '':
+    for i in range(1,25):
+        cubestate[i] = solved[i]
+for i in range(1,25):
+    cube[i] = cubestate[i]
+#first = raw_input("What color would you like to solve first?: ")
+first = ''
+if first == '':
+    first = cubestate[1]
 def graphic(x):
     print '''
       %s %s
@@ -680,22 +658,22 @@ def simulate():
         graphic(cube)
 
 #simulate()
-
 alg = ''
-'''for i in range(15):
+for i in range(15):
     alg = alg+random.choice(moves)
 use1(alg)
 scramblealg = alg
-'''
 graphic(cube)
-
 global test
 global bestalg
-global lenlist
-lenlist = [0]
+global firstmove
 test = ''
 bestalg = '19083217409138274098712389470198234718092734098127340987123098471230948712039847120938471029384710892347'
-for randint in range(7):
+firstmove = ''
+secondmove = ''
+thirdmove = ''
+
+for randint in range(6):
     for i in range(len(moves)**randint):
         test = ''
         for i in range(randint):
@@ -708,11 +686,8 @@ for randint in range(7):
         if len(finalalg) < len(bestalg):
             bestalg = finalalg
             print bestalg, '    ', len(bestalg)
-        lenlist.append(len(finalalg))
         for i in range(25):
-            cube[i] = cubestate[i]
+                cube[i] = cubestate[i]
         finalalg = ''
-topalgs = comm.gather(bestalg,root=0)
-if rank == 0:
-    globalbestalg = min(topalgs,key=len)
-    print '\n\nSolution:      ', globalbestalg,"        ", len(globalbestalg), "moves\n\n\n"
+
+print '\n\nSolution:      ', bestalg,"        ", len(bestalg), "moves\n\n\n"
