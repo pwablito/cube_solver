@@ -1,4 +1,5 @@
-#!/apps/local/easybuild/software/Python/2.7.8-gmvolf-5.5.4/bin/python
+#!/opt/moose/miniconda/bin/python
+
 
 import random
 import time
@@ -12,15 +13,15 @@ comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 size = comm.Get_size()
 name = MPI.Get_processor_name()
-
-newstate = dict()
-
-
 solved = ['state','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
 cube = ['','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
 cubestate = ['state','','','','','','','','','','','','','','','','','','','','','','','','']
+
+newstate = dict()
 if rank == 0:
-    print '''Sticker positions:
+    class puzzle:
+        print '''
+    Sticker positions:
 
             16 15
             14 13
@@ -31,18 +32,26 @@ if rank == 0:
             21 22
             23 24
     '''
-    option = '1'
-    if option == '1':
         for i in range(1,25):
             cubestate[i] = raw_input("What is the state of sticker %i?: " %(i))
-    if option == '2' or option == '':
         for i in range(25):
-            cubestate[i] = solved[i]
-    for i in range(25):
-        cube[i] = cubestate[i]
-    first = ''
-    if first == '':
-        first = cubestate[1]
+            cube[i] = cubestate[i]
+        def graphic(self,x):
+            print '''
+          %s %s
+          %s %s
+      %s %s %s %s %s %s
+      %s %s %s %s %s %s
+          %s %s
+          %s %s
+          %s %s
+          %s %s
+          '''%(x[16],x[15],x[14],x[13],x[19],x[17],x[1],x[2],x[10],x[12],x[20],x[18],x[3],x[4],x[9],x[11],x[5],x[6],x[7],x[8],x[21],x[22],x[23],x[24])
+        def first(self):
+            return cubestate[1]
+
+if rank == 0:
+    twobytwo = puzzle()
 cube = comm.bcast(cube,root=0)
 for i in range(25):
     cubestate[i] = cube[i]
@@ -671,6 +680,7 @@ def simulate():
         graphic(cube)
 
 #simulate()
+
 alg = ''
 '''for i in range(15):
     alg = alg+random.choice(moves)
@@ -706,12 +716,3 @@ topalgs = comm.gather(bestalg,root=0)
 if rank == 0:
     globalbestalg = min(topalgs,key=len)
     print '\n\nSolution:      ', globalbestalg,"        ", len(globalbestalg), "moves\n\n\n"
-#print '\n\n\nScramble:      ', scramblealg,"        ", len(scramblealg), "moves\n"
-#lenlist.sort()
-#lenlist.pop(0)
-#hmean = np.mean(lenlist)
-#hstd = np.std(lenlist)
-#pdf = stats.norm.pdf(lenlist, hmean, hstd)
-#plt.plot(lenlist, pdf)
-#plt.savefig("2x2bellcurve.pdf")
-#os.system('open 2x2bellcurve.pdf')
