@@ -1,30 +1,25 @@
 #!/usr/bin/python
 import random
 import time
-import numpy as np
-import scipy.stats as stats
-import matplotlib.pyplot as plt
-import os
 newstate = dict()
-#print '''Sticker positions:
-#
-#        16 15
-#        14 13
-#  19 17 01 02 10 12
-#  20 18 03 04 09 11
-#        05 06
-#        07 08
-#        21 22
-#        23 24
-#'''
-#option = raw_input('''Please choose an option:
-#1: Enter cube state
-#2 or <Enter>: Solved cube state
-#''')
+print '''Sticker positions:
+
+        16 15
+        14 13
+  19 17 01 02 10 12
+  20 18 03 04 09 11
+        05 06
+        07 08
+        21 22
+        23 24
+'''
+option = raw_input('''Please choose an option:
+1: Enter cube state
+2 or <Enter>: Solved cube state
+''')
 solved = ['state','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
 cube = ['state','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
 cubestate = ['state','','','','','','','','','','','','','','','','','','','','','','','','']
-option = '1'
 if option == '1':
     for i in range(1,25):
         cubestate[i] = raw_input("What is the state of sticker %i?: " %(i))
@@ -33,8 +28,7 @@ if option == '2' or option == '':
         cubestate[i] = solved[i]
 for i in range(1,25):
     cube[i] = cubestate[i]
-#first = raw_input("What color would you like to solve first?: ")
-first = ''
+first = raw_input("What color would you like to solve first?: ")
 if first == '':
     first = cubestate[1]
 def graphic(x):
@@ -200,7 +194,7 @@ def z():
 def Z():
     b()
     F()
-moves = ['r','l','f','b','u','d','R','L','F','B','U','D']
+moves = ['r','l','f','b','u','d']
 finalalg = ''
 finalalg2 = ''
 def use(alg):
@@ -245,9 +239,7 @@ def use(alg):
     finalalg = str.replace(finalalg,'X','Rl')
     finalalg = str.replace(finalalg,'z','fB')
     finalalg = str.replace(finalalg,'Z','Fb')
-    finalalg = str.replace(finalalg,'uU','')
-    finalalg = str.replace(finalalg,'Uu','')
-    finalalg = str.replace(finalalg,'fBfB','zz')
+
     for move in range(0,len(alg)):
         turn = alg[move]
         if turn == "r":
@@ -443,7 +435,7 @@ def solvedsidedown():
         if bottomcheck() == True:
             break
         elif topcheck() == True:
-            use('zz')
+            use('fbfb')
             break
         elif rightcheck() == True:
             use('z')
@@ -493,10 +485,10 @@ def pll():
             use('u')
             if toplayercheck() == True:
                 break
-            elif cube[5] == cube[14] and cube[6] == cube[13]:
+            elif topcheck() == True and cube[5] == cube[14] == cube[7] == cube[8] and cube[6] == cube[13] == cube[15] == cube[16]:
                 use('yperm')
                 break
-            elif cube[6] == cube[13] and cube[9] == cube[14]:
+            elif topcheck() == True and cube[6] == cube[13] and cube[9] == cube[14]:
                 use('tperm')
                 break
         break
@@ -545,22 +537,9 @@ def firstside():
         if topcheck() == True:
             break
         getnext()
-def solve():
-    while True:
-        t1 = time.time()
-        firstside()
-        pll()
-        use('zz')
-        oll()
-        pll()
-        lastmove()
-        if solvedcheck() == True:
-            break
-scramblealg = ''
 def simulate():
     graphic(cube)
     global finalalg
-    global scramblealg
     while True:
         alg = raw_input("What algorithm would you like to execute? ")
         if alg == 'oll':
@@ -575,7 +554,6 @@ def simulate():
             for i in range(15):
                 alg = alg+random.choice(moves)
             use1(alg)
-            scramblealg = alg
             alg = ''
         if alg == 'lastlayer':
             solveddown()
@@ -585,11 +563,26 @@ def simulate():
             alg = ''
         if alg == 'solve':
             while True:
-                solve()
+                t1 = time.time()
+                firstside()
+                pll()
+                use('fbfb')
+                oll()
+                pll()
+                lastmove()
+                if solvedcheck() == True:
+                    break
             alg = ''
             print "Solution: ", finalalg
             print "Solved in", time.time()-t1, "seconds"
             finalalg = ''
+        if alg == 'newsolve':
+            while True:
+                listmoves = [R,r,U,u,F,f]
+                t1 = time.time()
+                for i in range 25:
+                    scrambledstate[i] = cubestate[i]
+
         if alg == 'pll':
             pll()
             alg = ''
@@ -657,37 +650,4 @@ def simulate():
                 break
         graphic(cube)
 
-#simulate()
-alg = ''
-for i in range(15):
-    alg = alg+random.choice(moves)
-use1(alg)
-scramblealg = alg
-graphic(cube)
-global test
-global bestalg
-global firstmove
-test = ''
-bestalg = '19083217409138274098712389470198234718092734098127340987123098471230948712039847120938471029384710892347'
-firstmove = ''
-secondmove = ''
-thirdmove = ''
-
-for randint in range(6):
-    for i in range(len(moves)**randint):
-        test = ''
-        for i in range(randint):
-            test += random.choice(moves)
-        use(test)
-        while True:
-            solve()
-            if solvedcheck() == True:
-                break
-        if len(finalalg) < len(bestalg):
-            bestalg = finalalg
-            print bestalg, '    ', len(bestalg)
-        for i in range(25):
-                cube[i] = cubestate[i]
-        finalalg = ''
-
-print '\n\nSolution:      ', bestalg,"        ", len(bestalg), "moves\n\n\n"
+simulate()
