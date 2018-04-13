@@ -1,6 +1,6 @@
-#!/usr/bin/python
 import random
 import time
+from termcolor import colored
 newstate = dict()
 print '''Sticker positions:
 
@@ -17,12 +17,24 @@ option = raw_input('''Please choose an option:
 1: Enter cube state
 2 or <Enter>: Solved cube state
 ''')
-solved = ['state','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
-cube = ['state','#','#','#','#','~','~','~','~','.','.','.','.','/','/','/','/','^','^','^','^','0','0','0','0']
+solved = ['state',colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow')]
+cube = ['state',colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow')]
 cubestate = ['state','','','','','','','','','','','','','','','','','','','','','','','','']
 if option == '1':
     for i in range(1,25):
         cubestate[i] = raw_input("What is the state of sticker %i?: " %(i))
+        if cubestate[i] == 'r' or cubestate[i] == '~':
+          cubestate[i] = colored(u"\u25a0", 'red')
+        if cubestate[i] == 'b' or cubestate[i] == '.':
+          cubestate[i] = colored(u"\u25a0", 'blue')
+        if cubestate[i] == 'o' or cubestate[i] == ',':
+          cubestate[i] = colored(u"\u25a0", 'magenta')
+        if cubestate[i] == 'g' or cubestate[i] == '0':
+          cubestate[i] = colored(u"\u25a0", 'green')
+        if cubestate[i] == 'w' or cubestate[i] == '^':
+          cubestate[i] = colored(u"\u25a0", 'white')
+        if cubestate[i] == 'y' or cubestate[i] == '#':
+          cubestate[i] = colored(u"\u25a0", 'yellow')
 if option == '2' or option == '':
     for i in range(1,25):
         cubestate[i] = solved[i]
@@ -580,7 +592,7 @@ def simulate():
             while True:
                 listmoves = [R,r,U,u,F,f]
                 t1 = time.time()
-                for i in range 25:
+                for i in range(25):
                     scrambledstate[i] = cubestate[i]
 
         if alg == 'pll':
