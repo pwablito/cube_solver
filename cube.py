@@ -2,7 +2,7 @@ import random
 import time
 from termcolor import colored
 newstate = dict()
-print '''Sticker positions:
+print('''Sticker positions:
 
         16 15
         14 13
@@ -12,39 +12,39 @@ print '''Sticker positions:
         07 08
         21 22
         23 24
-'''
-option = raw_input('''Please choose an option:
+''')
+option = input('''Please choose an option:
 1: Enter cube state
 2 or <Enter>: Solved cube state
 ''')
-solved = ['state',colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow')]
-cube = ['state',colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'white'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'red'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'blue'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'magenta'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'green'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow'),colored(u"\u25a0", 'yellow')]
+solved = ['state',colored("\u25a0", 'white'),colored("\u25a0", 'white'),colored("\u25a0", 'white'),colored("\u25a0", 'white'),colored("\u25a0", 'red'),colored("\u25a0", 'red'),colored("\u25a0", 'red'),colored("\u25a0", 'red'),colored("\u25a0", 'blue'),colored("\u25a0", 'blue'),colored("\u25a0", 'blue'),colored("\u25a0", 'blue'),colored("\u25a0", 'magenta'),colored("\u25a0", 'magenta'),colored("\u25a0", 'magenta'),colored("\u25a0", 'magenta'),colored("\u25a0", 'green'),colored("\u25a0", 'green'),colored("\u25a0", 'green'),colored("\u25a0", 'green'),colored("\u25a0", 'yellow'),colored("\u25a0", 'yellow'),colored("\u25a0", 'yellow'),colored("\u25a0", 'yellow')]
+cube = ['state',colored("\u25a0", 'white'),colored("\u25a0", 'white'),colored("\u25a0", 'white'),colored("\u25a0", 'white'),colored("\u25a0", 'red'),colored("\u25a0", 'red'),colored("\u25a0", 'red'),colored("\u25a0", 'red'),colored("\u25a0", 'blue'),colored("\u25a0", 'blue'),colored("\u25a0", 'blue'),colored("\u25a0", 'blue'),colored("\u25a0", 'magenta'),colored("\u25a0", 'magenta'),colored("\u25a0", 'magenta'),colored("\u25a0", 'magenta'),colored("\u25a0", 'green'),colored("\u25a0", 'green'),colored("\u25a0", 'green'),colored("\u25a0", 'green'),colored("\u25a0", 'yellow'),colored("\u25a0", 'yellow'),colored("\u25a0", 'yellow'),colored("\u25a0", 'yellow')]
 cubestate = ['state','','','','','','','','','','','','','','','','','','','','','','','','']
 if option == '1':
     for i in range(1,25):
-        cubestate[i] = raw_input("What is the state of sticker %i?: " %(i))
+        cubestate[i] = input("What is the state of sticker %i?: " %(i))
         if cubestate[i] == 'r' or cubestate[i] == '~':
-          cubestate[i] = colored(u"\u25a0", 'red')
+          cubestate[i] = colored("\u25a0", 'red')
         if cubestate[i] == 'b' or cubestate[i] == '.':
-          cubestate[i] = colored(u"\u25a0", 'blue')
+          cubestate[i] = colored("\u25a0", 'blue')
         if cubestate[i] == 'o' or cubestate[i] == ',':
-          cubestate[i] = colored(u"\u25a0", 'magenta')
+          cubestate[i] = colored("\u25a0", 'magenta')
         if cubestate[i] == 'g' or cubestate[i] == '0':
-          cubestate[i] = colored(u"\u25a0", 'green')
+          cubestate[i] = colored("\u25a0", 'green')
         if cubestate[i] == 'w' or cubestate[i] == '^':
-          cubestate[i] = colored(u"\u25a0", 'white')
+          cubestate[i] = colored("\u25a0", 'white')
         if cubestate[i] == 'y' or cubestate[i] == '#':
-          cubestate[i] = colored(u"\u25a0", 'yellow')
+          cubestate[i] = colored("\u25a0", 'yellow')
 if option == '2' or option == '':
     for i in range(1,25):
         cubestate[i] = solved[i]
 for i in range(1,25):
     cube[i] = cubestate[i]
-first = raw_input("What color would you like to solve first?: ")
+first = input("What color would you like to solve first?: ")
 if first == '':
     first = cubestate[1]
 def graphic(x):
-    print '''
+    print('''
       %s %s
       %s %s
   %s %s %s %s %s %s
@@ -53,7 +53,7 @@ def graphic(x):
       %s %s
       %s %s
       %s %s
-    '''%(x[16],x[15],x[14],x[13],x[19],x[17],x[1],x[2],x[10],x[12],x[20],x[18],x[3],x[4],x[9],x[11],x[5],x[6],x[7],x[8],x[21],x[22],x[23],x[24])
+    '''%(x[16],x[15],x[14],x[13],x[19],x[17],x[1],x[2],x[10],x[12],x[20],x[18],x[3],x[4],x[9],x[11],x[5],x[6],x[7],x[8],x[21],x[22],x[23],x[24]))
 def mainr(cube):
     newstate = cube
     oldcube = (cube[0:len(cube)])
@@ -291,7 +291,7 @@ def use(alg):
         elif turn == "Y":
             Y()
         else:
-            print "Unknown move:", turn
+            print("Unknown move:", turn)
 def use1(alg):
     if alg == 'tperm':
         alg = 'ruRURfrrURUruRF'
@@ -313,7 +313,7 @@ def use1(alg):
         alg = 'RfrBRFrb'
     if alg == 'yperm':
         alg = 'fruRUruRFruRURfrF'
-    print alg
+    print(alg)
     for move in range(0,len(alg)):
         turn = alg[move]
         if turn == "r":
@@ -353,7 +353,7 @@ def use1(alg):
         elif turn == "Y":
             Y()
         else:
-            print "Unknown move:", turn
+            print("Unknown move:", turn)
 top = cube[1:5]
 front = cube[5:9]
 right = cube[9:13]
@@ -553,7 +553,7 @@ def simulate():
     graphic(cube)
     global finalalg
     while True:
-        alg = raw_input("What algorithm would you like to execute? ")
+        alg = input("What algorithm would you like to execute? ")
         if alg == 'oll':
             oll()
             alg = ''
@@ -561,7 +561,7 @@ def simulate():
             firstside()
             alg = ''
         if alg == 'scramble':
-            print "Scramble:",
+            print("Scramble:", end=' ')
             alg = ''
             for i in range(15):
                 alg = alg+random.choice(moves)
@@ -585,8 +585,8 @@ def simulate():
                 if solvedcheck() == True:
                     break
             alg = ''
-            print "Solution: ", finalalg
-            print "Solved in", time.time()-t1, "seconds"
+            print("Solution: ", finalalg)
+            print("Solved in", time.time()-t1, "seconds")
             finalalg = ''
         if alg == 'newsolve':
             while True:
@@ -658,7 +658,7 @@ def simulate():
             elif turn == "Y":
                 use('Y')
             else:
-                print "Unknown move:", turn
+                print("Unknown move:", turn)
                 break
         graphic(cube)
 
