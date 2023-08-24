@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cubev2"
+version = "0.0.1"
+description = "Cube v2"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+
+]
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov"]
+style = ["flake8", "black", "isort"]
+
+[project.scripts]
+cube-v2 = "cubev2.main:main"
