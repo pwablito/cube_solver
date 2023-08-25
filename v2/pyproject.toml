@@ -11,7 +11,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-
+    "click",
 ]
 
 [project.optional-dependencies]
