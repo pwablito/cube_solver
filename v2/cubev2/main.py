@@ -1,10 +1,4 @@
 import click
-from dataclasses import dataclass
-
-
-@dataclass
-class Context:
-    start_state: CubeState = None
 
 
 @click.group()
@@ -19,3 +13,7 @@ def main(ctx, verbose):
     Cube v2 Interface
     """
     pass
+
+
+if __name__ == "__main__":
+    main()
