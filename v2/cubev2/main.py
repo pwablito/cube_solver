@@ -1,5 +1,7 @@
 import click
 
+from .cube import Cube3x3
+
 
 @click.group()
 @click.option(
@@ -12,7 +14,12 @@ def main(ctx, verbose):
     """
     Cube v2 Interface
     """
-    pass
+
+
+@main.command()
+def sim3():
+    cube = Cube3x3()
+    cube.display()
 
 
 if __name__ == "__main__":
